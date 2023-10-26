@@ -1,6 +1,7 @@
 package com.backend.teste.services;
 
 import java.util.Optional;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class ProdutoService {
      * @return lista de produtos.
      */
     public List<Produto> obterTodos() { 
-        return produtoRepository.obterTodos();
+        return produtoRepository.findAll();
     }
 
     /**
@@ -29,7 +30,7 @@ public class ProdutoService {
      * @return produto.
      */
     public Optional<Produto> obterPorId(int id) {
-        return produtoRepository.obterPorId(id);
+        return produtoRepository.findById(id);
     }
 
     /**
@@ -38,7 +39,7 @@ public class ProdutoService {
      * @return novo produto.
      */
     public Produto adicionar(Produto p){
-        return produtoRepository.adicionar(p);
+        return produtoRepository.save(p);
     }
 
     /**
@@ -46,7 +47,7 @@ public class ProdutoService {
      * @param id do produto a ser deletado.
      */
     public void deletar(int id){
-        produtoRepository.deletar(id);
+        produtoRepository.deleteById(id);
     }
 
     /**
@@ -57,7 +58,7 @@ public class ProdutoService {
      */
     public Produto atualizar(int id, Produto p){
         p.setId(id);
-        return produtoRepository.atualizar(p);
+        return produtoRepository.save(p);
     }
 
 }
