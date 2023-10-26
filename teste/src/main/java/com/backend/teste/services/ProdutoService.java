@@ -1,7 +1,6 @@
 package com.backend.teste.services;
 
 import java.util.Optional;
-import java.util.InputMismatchException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
