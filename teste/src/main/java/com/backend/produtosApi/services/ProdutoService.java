@@ -1,4 +1,4 @@
-package com.backend.teste.services;
+package com.backend.produtosApi.services;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,9 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.backend.teste.model.Produto;
-import com.backend.teste.repository.ProdutoRepository;
-import com.backend.teste.shared.ProdutoDTO;
+import com.backend.produtosApi.model.Produto;
+import com.backend.produtosApi.repository.ProdutoRepository;
+import com.backend.produtosApi.shared.ProdutoDTO;
 
 @Service
 public class ProdutoService {

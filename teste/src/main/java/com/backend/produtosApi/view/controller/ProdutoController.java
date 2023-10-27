@@ -1,4 +1,4 @@
-package com.backend.teste.view.controller;
+package com.backend.produtosApi.view.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.teste.services.ProdutoService;
-import com.backend.teste.shared.ProdutoDTO;
-import com.backend.teste.view.model.ProdutoRequest;
-import com.backend.teste.view.model.ProdutoResponse;
+import com.backend.produtosApi.services.ProdutoService;
+import com.backend.produtosApi.shared.ProdutoDTO;
+import com.backend.produtosApi.view.model.ProdutoRequest;
+import com.backend.produtosApi.view.model.ProdutoResponse;
 
 @RestController
 @RequestMapping("api/produtos")

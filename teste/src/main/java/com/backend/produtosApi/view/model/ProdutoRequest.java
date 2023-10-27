@@ -1,4 +1,4 @@
-package com.backend.teste.view.model;
+package com.backend.produtosApi.view.model;
 
 public class ProdutoRequest {
       //#region Atributos
