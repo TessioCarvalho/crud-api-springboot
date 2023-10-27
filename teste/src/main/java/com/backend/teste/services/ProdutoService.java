@@ -1,13 +1,16 @@
 package com.backend.teste.services;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.backend.teste.model.Produto;
 import com.backend.teste.repository.ProdutoRepository;
+import com.backend.teste.shared.ProdutoDTO;
 
 @Service
 public class ProdutoService {
@@ -19,8 +22,11 @@ public class ProdutoService {
      * Retorna uma lista de todos os produtos.
      * @return lista de produtos.
      */
-    public List<Produto> obterTodos() { 
-        return produtoRepository.findAll();
+    public List<ProdutoDTO> obterTodos() { 
+        List<Produto> produtos = produtoRepository.findAll();
+        return produtos.stream()
+                       .map(p -> new ModelMapper().map(p, ProdutoDTO.class))
+                       .collect(Collectors.toList());
     }
 
     /**
@@ -28,8 +34,10 @@ public class ProdutoService {
      * @param id do produto desejado.
      * @return produto.
      */
-    public Optional<Produto> obterPorId(int id) {
-        return produtoRepository.findById(id);
+    public Optional<ProdutoDTO> obterPorId(int id) {
+        Optional<Produto> p = produtoRepository.findById(id);
+        ProdutoDTO dto = new ModelMapper().map(p.get(), ProdutoDTO.class);
+        return Optional.of(dto);
     }
 
     /**
@@ -37,8 +45,12 @@ public class ProdutoService {
      * @param p produto a ser adicionado.
      * @return novo produto.
      */
-    public Produto adicionar(Produto p){
-        return produtoRepository.save(p);
+    public ProdutoDTO adicionar(ProdutoDTO p){
+        ModelMapper m = new ModelMapper();
+        Produto prod = m.map(p, Produto.class);
+        prod = produtoRepository.save(prod);
+        p.setId(prod.getId());
+        return p;
     }
 
     /**
@@ -46,6 +58,7 @@ public class ProdutoService {
      * @param id do produto a ser deletado.
      */
     public void deletar(int id){
+        Optional<Produto> p = produtoRepository.findById(id);
         produtoRepository.deleteById(id);
     }
 
@@ -55,9 +68,12 @@ public class ProdutoService {
      * @param id do produto que será atualizado.
      * @return produto com os dados atualizados.
      */
-    public Produto atualizar(int id, Produto p){
-        p.setId(id);
-        return produtoRepository.save(p);
+    public ProdutoDTO atualizar(int id, ProdutoDTO pDto){
+        pDto.setId(id);
+        ModelMapper m = new ModelMapper();
+        Produto prod = m.map(pDto, Produto.class);
+        produtoRepository.save(prod);
+        return pDto;
     }
 
 }
