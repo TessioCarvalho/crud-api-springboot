@@ -58,7 +58,6 @@ public class ProdutoService {
      * @param id do produto a ser deletado.
      */
     public void deletar(int id){
-        Optional<Produto> p = produtoRepository.findById(id);
         produtoRepository.deleteById(id);
     }
 
