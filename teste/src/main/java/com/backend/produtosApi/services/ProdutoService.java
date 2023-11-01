@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.backend.produtosApi.model.Produto;
+import com.backend.produtosApi.model.exception.ResourceNotFoundException;
 import com.backend.produtosApi.repository.ProdutoRepository;
 import com.backend.produtosApi.shared.ProdutoDTO;
 
@@ -22,8 +23,11 @@ public class ProdutoService {
      * Retorna uma lista de todos os produtos.
      * @return lista de produtos.
      */
-    public List<ProdutoDTO> obterTodos() { 
+    public List<ProdutoDTO> obterTodos() {
         List<Produto> produtos = produtoRepository.findAll();
+        if (produtos.isEmpty()) {
+            throw new ResourceNotFoundException("Sem registros!");
+        } 
         return produtos.stream()
                        .map(p -> new ModelMapper().map(p, ProdutoDTO.class))
                        .collect(Collectors.toList());
@@ -36,6 +40,9 @@ public class ProdutoService {
      */
     public Optional<ProdutoDTO> obterPorId(int id) {
         Optional<Produto> p = produtoRepository.findById(id);
+        if (p.isEmpty()) {
+           throw new ResourceNotFoundException("Id: "+ id +" não encontrado"); 
+        }
         ProdutoDTO dto = new ModelMapper().map(p.get(), ProdutoDTO.class);
         return Optional.of(dto);
     }

@@ -35,16 +35,12 @@ public class ProdutoController {
      */
     @GetMapping
     public ResponseEntity<List<ProdutoResponse>> obterTodos() {
-         try {
             List<ProdutoDTO> produtos = produtoService.obterTodos();
             ModelMapper m = new ModelMapper();
             List<ProdutoResponse> resposta = produtos.stream()
                        .map(p -> m.map(p, ProdutoResponse.class))
                        .collect(Collectors.toList());
          return new ResponseEntity<>(resposta, HttpStatus.OK);
-         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-         }
     }
     
      /**
@@ -54,13 +50,9 @@ public class ProdutoController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ProdutoResponse>> obterPorId(@PathVariable int id) {
-        try {
             Optional<ProdutoDTO> dto = produtoService.obterPorId(id);
             ProdutoResponse p = new ModelMapper().map(dto.get(), ProdutoResponse.class);
             return new ResponseEntity<>(Optional.of(p), HttpStatus.OK);   
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }     
     }
 
      /**
